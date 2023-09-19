@@ -3,11 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleIdentifier</key>
-	<string><!-- VALUE --></string>
+	<string>NSIS</string>
 	<key>CFBundleName</key>
-	<string><!-- VALUE --></string>
+	<string>NSIS</string>
 	<key>DocSetPlatformFamily</key>
-	<string><!-- VALUE --></string>
+	<string>nsis</string>
+	<key>dashIndexFilePath</key>
+	<string>Docs/Contents.html</string>
 	<key>isDashDocset</key>
 	<true/>
 </dict>

@@ -1,4 +1,4 @@
-#DOCSET_NAME = ...
+DOCSET_NAME = NSIS
 
 DOCSET_DIR    = $(DOCSET_NAME).docset
 CONTENTS_DIR  = $(DOCSET_DIR)/Contents
@@ -8,12 +8,13 @@ DOCUMENTS_DIR = $(RESOURCES_DIR)/Documents
 INFO_PLIST_FILE = $(CONTENTS_DIR)/Info.plist
 INDEX_FILE      = $(RESOURCES_DIR)/docSet.dsidx
 ICON_FILE       = $(DOCSET_DIR)/icon.png
+ICON_FILE_2X    = $(DOCSET_DIR)/icon@2x.png
 ARCHIVE_FILE    = $(DOCSET_NAME).tgz
 
-#SRC_ICON = src/icon.png
+SRC_ICON = src/icon.png
+SRC_ICON_2X = src/icon@2x.png
 
-#MANUAL_URL  = ...
-#MANUAL_FILE = tmp/...
+MANUAL_FILE = manual_src/manual.tar.gz
 
 ERROR_DOCSET_NAME = $(error DOCSET_NAME is unset)
 WARNING_MANUAL_URL = $(warning MANUAL_URL is unset)
@@ -37,6 +38,9 @@ endif
 DOCSET = $(INFO_PLIST_FILE) $(INDEX_FILE)
 ifdef SRC_ICON
 DOCSET += $(ICON_FILE)
+endif
+ifdef SRC_ICON_2X
+DOCSET += $(ICON_FILE_2X)
 endif
 
 all: $(DOCSET)
@@ -73,7 +77,11 @@ $(INFO_PLIST_FILE): src/Info.plist $(CONTENTS_DIR)
 
 $(INDEX_FILE): src/index.sh $(DOCUMENTS_DIR)
 	rm -f $@
-	src/index.sh $@ $(DOCUMENTS_DIR)/*.html
+	src/index.sh $@ $(DOCUMENTS_DIR)/Docs/*.html
+	src/index_sub_pages.sh $@ $(DOCUMENTS_DIR)/Docs/Contents.html
 
-$(ICON_FILE): src/icon.png $(DOCSET_DIR)
+$(ICON_FILE): $(SRC_ICON) $(DOCSET_DIR)
 	cp $(SRC_ICON) $@
+
+$(ICON_FILE_2X): $(SRC_ICON_2X) $(DOCSET_DIR)
+	cp $(SRC_ICON_2X) $@
